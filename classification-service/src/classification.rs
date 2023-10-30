@@ -71,7 +71,7 @@ impl Handler<Classify> for ClassificationActor {
             .iter()
             .map(|category| category.as_str())
             .collect::<Vec<&str>>();
-        let max_tokens: usize = 512;
+        let max_tokens: usize = 1024;
         let splitter: TextSplitter<Tokenizer> =
             TextSplitter::new(self.tokenizer.clone()).with_trim_chunks(true);
 

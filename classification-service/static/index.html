@@ -1,0 +1,69 @@
+<h1>Classification</h1>
+<form id="classificationForm" action="/api/classify" method="POST">
+    <div class="form-group">
+        <label for="text">Text:</label>
+        <textarea id="text" name="text" rows="10" cols="50"></textarea>
+    </div>
+    <div class="form-group">
+        <label for="categories">Categories (comma separated):</label>
+        <textarea id="categories" name="categories" rows="5" cols="50"></textarea>
+    </div>
+    <input type="submit" value="Submit">
+</form>
+
+<!-- Results section -->
+<div id="results">
+    <h2>Results:</h2>
+    <ul id="resultsList"></ul>
+</div>
+
+<style>
+    .form-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-group label {
+        align-self: flex-start;
+    }
+</style>
+
+<script>
+    document.getElementById('classificationForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const text = document.getElementById('text').value;
+        const categories = document.getElementById('categories').value.split(',');
+
+        const formData = {
+            text: text,
+            categories: categories
+        };
+
+        fetch('/api/classify', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+            .then(response => response.json())
+            .then(data => {
+                // Handle the response data here
+                const resultsList = document.getElementById('resultsList');
+
+                // Clear previous results
+                resultsList.innerHTML = '';
+
+                // Append each result to the resultsList
+                data.forEach(result => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = `Label: ${result.label}, Score: ${result.score.toFixed(4)}`;
+                    resultsList.appendChild(listItem);
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    });
+</script>

@@ -8,7 +8,9 @@ pub async fn classify_route(
     actor: web::Data<Addr<ClassificationActor>>,
     params: web::Json<Classify>,
 ) -> impl Responder {
+    println!("classify_route");
     let result = actor.send(params.into_inner()).await;
+    println!("classify_route result: {:?}", result);
     match result {
         Ok(res) => match res {
             Ok(r) => {

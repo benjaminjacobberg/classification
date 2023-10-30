@@ -11,6 +11,7 @@ text-splitter = { version = "0.4.4", features = ["tokenizers"]}
 tokenizers = { version = "0.14.1", features = ["http"] }
 actix = "0.13.1"
 actix-web = "4.4.0"
+actix-files = "0.6.2"
 actix-rt = "2.9.0"
 actix-cors = "0.6.4"
 serde = { version = "1.0", features = ["derive"] }
